@@ -15,7 +15,6 @@ export function ProductListWidget({
   setOrders,
 }: ProductListWidgetProps): React.JSX.Element {
   const { products } = useAppSelector((store) => store.products);
-  console.log("widget products", products);
 
   return (
     <div className={styles.productList}>

@@ -28,7 +28,7 @@ export function SingleProductWidget({
         />
         <h2>{product.title}</h2>
         <div>{product.description}</div>
-        <h2>Цена: {product.price}₽</h2>
+        <h2>Цена: {product.price} ₽</h2>
       </div>
       {productCounter === 0 ? (
         <button
