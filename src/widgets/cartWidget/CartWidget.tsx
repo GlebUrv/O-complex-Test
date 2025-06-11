@@ -65,12 +65,13 @@ export function CartWidget({ orders }: CartWidgetProps): React.JSX.Element {
   }
 
   function formatPhone(value: string): string {
-    if (value[0] === "+" && value[1] === "7") {
-      return value;
-    } else if (value[0] === "7") {
-      return "+" + value;
+    const targetValue = value.replace(/[\s\-()a-zA-Zа-яА-ЯёЁ]/g, "");
+    if (targetValue[0] === "+" && targetValue[1] === "7") {
+      return targetValue;
+    } else if (targetValue[0] === "7") {
+      return "+" + targetValue;
     } else {
-      return "+7" + value;
+      return "+7" + targetValue;
     }
   }
 
