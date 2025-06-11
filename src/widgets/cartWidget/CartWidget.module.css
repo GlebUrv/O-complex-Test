@@ -1,0 +1,80 @@
+.cart {
+  width: 700px;
+  background-color: #bcb9b9;
+  color: black;
+  border-radius: 15px;
+  padding: 1em;
+}
+
+.orderList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+}
+
+.orderLine {
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.orderDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.orderActions {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.buyBtn {
+  background-color: black;
+  border-radius: 15px;
+  width: 50%;
+  font-size: 1.3em;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .cart {
+    box-sizing: border-box;
+    width: 300px;
+    padding: 1em 2em;
+    margin: 0.2em auto;
+  }
+  .orderActions {
+    width: 100%;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .orderActions * {
+    width: 100%;
+  }
+
+  .orderLine {
+    align-items: center;
+    margin-bottom: 0.5em;
+  }
+
+  .orderDetails {
+    width: 80%;
+    align-items: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .cart {
+    max-width: 100%;
+  }
+}

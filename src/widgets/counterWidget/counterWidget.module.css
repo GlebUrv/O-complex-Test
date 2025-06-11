@@ -1,0 +1,19 @@
+.counterBlock {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 0.2em;
+}
+
+.counterBlock input {
+  text-align: center;
+}
+
+.buyBtn {
+  background-color: black;
+  border-radius: 15px;
+  width: 100%;
+  font-size: 1.3em;
+  color: white;
+  padding: 0.5em;
+}

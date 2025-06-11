@@ -1,0 +1,22 @@
+.productList {
+  max-width: 1500px;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 5em;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .productList {
+    width: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .productList {
+    max-width: 100%;
+  }
+}
