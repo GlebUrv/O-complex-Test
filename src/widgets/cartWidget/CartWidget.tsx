@@ -1,23 +1,22 @@
-import type { IProductData } from "@/entities/product";
 import styles from "./CartWidget.module.css";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/shared/hooks";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks";
 import { createOrderThunk } from "@/entities/order/api/orderThunkApi";
+import type { IArrayCartItem } from "@/entities/order/model/types";
+import { clearCart } from "@/entities/order/slice/orderSlice";
 
-interface CartWidgetProps {
-  orders: { product: IProductData; qty: number }[];
-}
-
-export function CartWidget({ orders }: CartWidgetProps): React.JSX.Element {
+export function CartWidget(): React.JSX.Element {
   const [phone, setPhone] = useState<string | undefined>(undefined);
   const dispatch = useAppDispatch();
 
+  const cart = localStorage.getItem("cart");
+  const currentOrders = useAppSelector((store) => store.order.cart);
+  const orders: IArrayCartItem = cart ? JSON.parse(cart) : currentOrders;
+
   useEffect(() => {
     const savedPhone = localStorage.getItem("saved_phone");
-    // const savedOrders = localStorage.getItem("cart_orders");
 
     if (savedPhone) setPhone(savedPhone);
-    // if (savedOrders) setOrders(JSON.parse(savedOrders));
   }, []);
 
   function phoneTest(phone: string): boolean {
@@ -54,7 +53,7 @@ export function CartWidget({ orders }: CartWidgetProps): React.JSX.Element {
       const result = await dispatch(createOrderThunk(orderData));
       if (result.payload?.success === 1) {
         alert("Заказ отправлен");
-        localStorage.removeItem("saved_phone");
+        dispatch(clearCart());
       } else {
         alert(result.payload?.error);
       }

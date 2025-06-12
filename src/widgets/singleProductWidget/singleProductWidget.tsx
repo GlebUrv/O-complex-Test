@@ -2,21 +2,16 @@ import type { IProductData } from "@/entities/product";
 import styles from "./singleProductWidget.module.css";
 import { useState } from "react";
 import { CounterWidget } from "../index";
+import { useAppDispatch } from "@/shared/hooks";
+import { addItem } from "@/entities/order/slice/orderSlice";
 
 interface Props {
   product: IProductData;
-  orders: { product: IProductData; qty: number }[] | [];
-  setOrders: React.Dispatch<
-    React.SetStateAction<{ product: IProductData; qty: number }[]>
-  >;
 }
 
-export function SingleProductWidget({
-  product,
-  orders,
-  setOrders,
-}: Props): React.JSX.Element {
+export function SingleProductWidget({ product }: Props): React.JSX.Element {
   const [productCounter, setProductCounter] = useState(0);
+  const dispatch = useAppDispatch();
 
   return (
     <div className={styles.productCard}>
@@ -36,7 +31,7 @@ export function SingleProductWidget({
           onClick={() => {
             const newQty = productCounter + 1;
             setProductCounter(newQty);
-            setOrders((prev) => [...prev, { product, qty: newQty }]);
+            dispatch(addItem({ product, qty: newQty }));
           }}
         >
           Купить
@@ -44,10 +39,8 @@ export function SingleProductWidget({
       ) : (
         <CounterWidget
           product={product}
-          orders={orders}
           counterValue={productCounter}
           setCounterValue={setProductCounter}
-          setOrders={setOrders}
         />
       )}
     </div>

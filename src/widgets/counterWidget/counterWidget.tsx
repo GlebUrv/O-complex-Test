@@ -1,24 +1,22 @@
 import type { IProductData } from "@/entities/product";
 import styles from "./counterWidget.module.css";
 import { type Dispatch, type SetStateAction } from "react";
+import { useAppDispatch } from "@/shared/hooks";
+import { removeItem, updateQuantity } from "@/entities/order/slice/orderSlice";
 
 interface Props {
   product: IProductData;
   counterValue: number;
   setCounterValue: Dispatch<SetStateAction<number>>;
-  orders: { product: IProductData; qty: number }[] | [];
-  setOrders: React.Dispatch<
-    React.SetStateAction<{ product: IProductData; qty: number }[]>
-  >;
 }
 
 export function CounterWidget({
   product,
   counterValue,
   setCounterValue,
-  orders,
-  setOrders,
 }: Props): React.JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <div className={styles.counterBlock}>
       <button
@@ -27,15 +25,9 @@ export function CounterWidget({
           const newQty = counterValue - 1;
           setCounterValue(newQty);
           if (newQty > 0) {
-            const newOrders = orders.map((order) => {
-              if (order.product === product) {
-                order.qty = newQty;
-              }
-              return order;
-            });
-            setOrders(newOrders);
+            dispatch(updateQuantity({ product, qty: newQty }));
           } else {
-            setOrders((prev) => prev.filter((el) => el.product !== product));
+            dispatch(removeItem({ product, qty: newQty }));
           }
         }}
       >
@@ -49,15 +41,9 @@ export function CounterWidget({
           const newQty = Number(e.target.value);
           setCounterValue(newQty);
           if (newQty > 0) {
-            const newOrders = orders.map((order) => {
-              if (order.product === product) {
-                order.qty = newQty;
-              }
-              return order;
-            });
-            setOrders(newOrders);
+            dispatch(updateQuantity({ product, qty: newQty }));
           } else {
-            setOrders((prev) => prev.filter((el) => el.product !== product));
+            dispatch(removeItem({ product, qty: newQty }));
           }
         }}
       />
@@ -66,13 +52,7 @@ export function CounterWidget({
         onClick={() => {
           const newQty = counterValue + 1;
           setCounterValue(newQty);
-          const newOrders = orders.map((order) => {
-            if (order.product === product) {
-              order.qty = newQty;
-            }
-            return order;
-          });
-          setOrders(newOrders);
+          dispatch(updateQuantity({ product, qty: newQty }));
         }}
       >
         +

@@ -1,10 +1,9 @@
 import { useAppDispatch } from "@/shared/hooks";
 import styles from "./HomePage.module.css";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { getReviewsThunk } from "@/entities/review/api/reviewThunkApi";
 import { CartWidget, ProductListWidget, ReviewWidget } from "@/widgets";
 import { getProductsThunk } from "@/entities/product/api/productThunkApi";
-import type { IProductData } from "@/entities/product";
 
 export function HomePage(): React.JSX.Element {
   useLayoutEffect(() => {
@@ -12,9 +11,6 @@ export function HomePage(): React.JSX.Element {
   }, []);
 
   const dispatch = useAppDispatch();
-  const [orders, setOrders] = useState<
-    { product: IProductData; qty: number }[] | []
-  >([]);
 
   useEffect(() => {
     dispatch(getReviewsThunk());
@@ -28,8 +24,8 @@ export function HomePage(): React.JSX.Element {
         <ReviewWidget />
       </div>
       <div className={styles.bottomBlock}>
-        <CartWidget orders={orders} />
-        <ProductListWidget orders={orders} setOrders={setOrders} />
+        <CartWidget />
+        <ProductListWidget />
       </div>
     </div>
   );
